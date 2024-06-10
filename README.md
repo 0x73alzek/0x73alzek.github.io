@@ -17,7 +17,7 @@ If you have anything that you want to tell, suggesting imporvements, fix errors,
 
 ### About Me
 
-I am really someone who is trying to be good at hacking.
+I am really someone who is trying to be good at hacking. Maybe one day I'll be able to use this for good.
 
 
 
