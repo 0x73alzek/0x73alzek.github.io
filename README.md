@@ -1,29 +1,23 @@
 
-# 0x73alzek.github.io - Random Stuff about CyberSecurity
-
 ### Overview
 
-This site is meant to be a collection of posts about CyberSecurity, my personal researches, guides and walkthroughs, certifications/courses reviews, curiosities and other random stuff.
+This site will contain technical works, research, and stories about pentesting/red teaming.
 
-As it's not a blog, it's impossible to comment, but if you have anything that you want to tell, suggesting imporvements, fix errors, and similar things, drop me a mail on klez.virus@gmail.com.
+If you have anything that you want to tell, suggesting imporvements, fix errors, and similar things, drop me a mail on 0x73alzek@gmail.com.
 
 ### Current sections
 
+<!-- 
 * [Web Exploitation](https://0x73alzek.github.io/Advanced-Web-Hacking/)
 * [Red Teaming](https://0x73alzek.github.io/RedTeaming/)
 * [Miscellaneous](https://0x73alzek.github.io/Misc/)
+-->
 
-### About this site
-
-Research for the sake of discovering new things.
-Studying for the sake of understanding things.
-Write things for the sake of writing.
-
-I hope that this site would be beneficial to anyone reading it.
+* [AV Evasion](https://0x73alzek.github.io/Evasion/)
 
 ### About Me
 
-I'm a just another-security-passionate with an insatiable hunger for knowledge.
+I am someone trying to learn everything about hacking. You know, before hacking a target, you need to understand how it works. That's why I spend most of my time doing deep technical research, reading articles and tries about target on my local environment. The rest is easy peasy.
 
 
 
