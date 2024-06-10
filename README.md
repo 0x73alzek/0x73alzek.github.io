@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # 0x73alzek.github.io - Random Stuff about CyberSecurity
 
 ### Overview
@@ -21,9 +21,9 @@ Write things for the sake of writing.
 
 I hope that this site would be beneficial to anyone reading it.
 
-### Who I am
+### About Me
 
 I'm a just another-security-passionate with an insatiable hunger for knowledge.
-=======
-Web site is ready!
->>>>>>> f18a627250d419e5312b48538deb03170253daec
+
+
+
