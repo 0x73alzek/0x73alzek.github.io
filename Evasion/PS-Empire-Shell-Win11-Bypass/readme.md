@@ -10,4 +10,4 @@
 
 Firstly, let's generate a payload in Empire using the default settings. (I'm skipping the installation steps, how to edit the listener, or stage, etc.)
 
-![Syscall Mark](./assets/syscall-mark.png)
+![Syscall Mark](./assets/default-listener-table-view.png)
