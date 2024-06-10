@@ -17,7 +17,7 @@ If you have anything that you want to tell, suggesting imporvements, fix errors,
 
 ### About Me
 
-I am someone trying to learn everything about hacking. You know, before hacking a target, you need to understand how it works. That's why I spend most of my time doing deep technical research, reading articles and tries about target on my local environment. The rest is easy peasy.
+I am really someone who is trying to be good at hacking.
 
 
 
