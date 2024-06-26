@@ -14,19 +14,19 @@ timezone: Europe/Paris
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: itm4n's blog                          # the main title
+title: 0x73alzek's blog                          # the main title
 
-tagline: Pentesting & Windows security research   # it will display as the sub-title
+tagline: Pentesting   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
-  A blog about pentesting with a focus on Windows security research.
+  A blog about pentesting.
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
-url: 'https://itm4n.github.io'
+url: 'https://0x73alzek.github.io'
 
 github:
-  username: itm4n             # change to your github username
+  username: 0x73alzek             # change to your github username
 
 # twitter:
 #   username: twitter_username            # change to your twitter username
@@ -34,12 +34,12 @@ github:
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: itm4n
-  email: itm4n@contoso.com             # change to your email address
+  name: 0x73alzek
+  email: 0x73alzek@gmail.com            # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://infosec.exchange/@itm4n      # change to your twitter homepage
-    - https://github.com/itm4n       # change to your github homepage
+    # https://infosec.exchange/@itm4n      # change to your twitter homepage
+    # https://github.com/itm4n       # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
@@ -96,7 +96,7 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: '/assets/img/itm4n.png'
+avatar: '/assets/img/0x73alzek.jpg'
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
