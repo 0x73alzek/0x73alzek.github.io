@@ -16,7 +16,7 @@ timezone: Europe/Paris
 
 title: 0x73alzek's blog                          # the main title
 
-tagline: Pentesting    # it will display as the sub-title
+tagline: Pentester    # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
   A blog about pentesting.
