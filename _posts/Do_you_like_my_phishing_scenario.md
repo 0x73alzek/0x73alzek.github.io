@@ -3,7 +3,7 @@ title: "Do YoU LiKe mY pHishiNG SCenariO?!"
 layout: "post"
 categories: ["Research"]
 tags: ["Research"]
-image: /assets/og/phishing.png
+image: /assets/og/research.png
 ---
 
 A colleague of mine recently found himself in a situation where he had physical access to a Windows machine connected to a wired network using 802.1X and saved user credentials for the authentication. Naturally, he wanted to extract those credentials. Nothing extraordinary about that you might think, and yet, there was a twist...
