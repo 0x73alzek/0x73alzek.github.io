@@ -1,5 +1,5 @@
 ---
-title: "Do YoU LiKe mY pHishiNG SCenariO?!"
+title: "Did you like my phishing scenario"
 layout: "post"
 categories: ["Research"]
 tags: ["Research"]
