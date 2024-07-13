@@ -12,4 +12,3 @@ image: /assets/og/phishing.png
 
 For this blog post,
 
-{% include video id="TyFHmhjm5ig" provider="youtube" %}
