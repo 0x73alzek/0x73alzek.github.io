@@ -8,7 +8,7 @@ image: /assets/og/phishing.png
 
 
 
-## Where to start?
+## 📑 Initial Access
+The first video demonstrates steps for prepping our attack from the Havoc Teamserver, which includes connecting to teamserver, creating a listener, and generating a payload.
 
-For this blog post,
-
+{% include video id="ORPrpKvO56M" provider="youtube" %}
