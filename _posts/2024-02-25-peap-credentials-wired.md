@@ -7,7 +7,7 @@ image: /assets/og/1733.png
 youtubeId: ORPrpKvO56M
 ---
 
-A colleague of mine recently found himself in a situation where he had physical access to a Windows machine connected to a wired network using 802.1X and saved user credentials for the authentication. Naturally, he wanted to extract those credentials. Nothing extraordinary about that you might think, and yet, there was a twist...
+I understand you. There are so many defensive products to stop attackers, like O365, Mail Gateway Products/Solutions, Mail, Web Proxies, Firewalls, or Rules/Limitations. But... Just keep reading on.
 
 
 ## Where to start?
