@@ -3,7 +3,7 @@ title: "Extracting PEAP Credentials from Wired Network Profiles"
 layout: "post"
 categories: ["Research"]
 tags: ["Research"]
-image: /assets/og/research.png
+image: /assets/og/CwnmVg0.png
 youtubeId: ORPrpKvO56M
 ---
 
