@@ -13,3 +13,4 @@ A colleague of mine recently found himself in a situation where he had physical 
 
 For this blog post, I will assume the reader is already familiar with basic Windows credential extraction techniques and 802.1X network authentication concepts because I want to keep it short (for once).
 
+{% include video id="ORPrpKvO56M" provider="youtube" %}
