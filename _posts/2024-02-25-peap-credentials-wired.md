@@ -39,4 +39,10 @@ Thank you,
 Google Drive Team
 ```
 
-As you can see, The pretext is about 
+## Mail Client Screenshots
+
+![Inbox](/assets/posts/2024-07-14-phishing-is-real/inbox.png)
+
+![Inbox](/assets/posts/2024-07-14-phishing-is-real/inbox2.png)
+
+![Mail Client](/assets/posts/2024-07-14-phishing-is-real/mail_client_1.png)
