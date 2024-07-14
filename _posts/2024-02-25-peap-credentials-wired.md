@@ -92,5 +92,6 @@ For example If you want to phish someone who has uploaded a file to Google Drive
 ![Details](/assets/posts/2024-07-14-phishing-is-real/email.png)
 
 > If you send phishing email to Microsoft email accounts, Microsoft highlights your link in email body.
+{: .prompt-tip}
 
 ![Highlight](/assets/posts/2024-07-14-phishing-is-real/highlight.png)
