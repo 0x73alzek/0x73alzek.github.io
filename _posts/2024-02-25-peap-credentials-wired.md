@@ -22,7 +22,7 @@ Hello from Google Drive,
 
 This is last reminder for you. Your file may violate Google Drive's Terms of Service.
 
-"Turna2Kurulum.exe" contains content that may violate Google Drive's Malware and Similar 
+"**********.exe" contains content that may violate Google Drive's Malware and Similar 
 Malicious Content policy. Before our legal team takes any action, we are awaiting your response. 
 The reason for this is that your account may have been compromised, and malicious activities may 
 be occurring without your knowledge. If you think this is an error, please check for the file 
@@ -31,10 +31,12 @@ feedback.
 
 Details of the flagged file:
 
-File Name: Turna2Kurulum.exe
-Upload Date: 11:37 PM Mar 5
+File Name: **********.exe
+Upload Date: 11:37 PM *** 5
 
 
 Thank you,
 Google Drive Team
 ```
+
+As you can see, The pretext is about 
