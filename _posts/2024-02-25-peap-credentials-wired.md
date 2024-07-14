@@ -12,3 +12,5 @@ When you want to download file (unless it's a direct link, of course.) from Goog
 ![Share Button](/assets/posts/2024-07-14-phishing-is-real/share_button.png)
 
 When you click its, somethings should catches your attention. 
+
+![Share Content](/assets/posts/2024-07-14-phishing-is-real/share_content.png)
