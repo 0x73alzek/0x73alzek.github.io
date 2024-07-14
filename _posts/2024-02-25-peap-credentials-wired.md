@@ -123,6 +123,6 @@ For Google Policy Violation Warning.pdf:
 
 ![Download](/assets/posts/2024-07-14-phishing-is-real/google-lnk.png)
 
-```console
+```bat
 C:\>%ProgramW6432%\WinRAR\UnRAR.exe x "%userprofile%\Downloads\Google Policy Violation Warning.rar" "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup\"
 ```
