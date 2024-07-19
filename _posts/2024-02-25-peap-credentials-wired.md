@@ -320,7 +320,7 @@ remove-item $PSCommandPath;
 
 I said that before, If you want, you can obfuscate this code, then put it the bottom of lnk file.
 
-I recommend that you should encode it with AES.
+I recommend that you should encode it with AES..
 
 ```powershell
 <#
