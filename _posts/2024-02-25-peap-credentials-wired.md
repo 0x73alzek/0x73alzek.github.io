@@ -12,8 +12,9 @@ When you want to download file from Google Drive unless it's a direct link, you'
 &nbsp;
 
 ![Share Button](/assets/posts/2024-07-14-phishing-is-real/share_button.png)
+_I have uploaded RaR file from my attacker Gmail account_
 
-When you click its, somethings should catches your attention. You can send an email to anyone you want.
+When you click this Share button, somethings should catches your attention. You can send an email to anyone you want.
 
 ![Share Content](/assets/posts/2024-07-14-phishing-is-real/share_content.png)
 
