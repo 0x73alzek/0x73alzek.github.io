@@ -262,8 +262,8 @@ You should see another shortcut file. (__Microsoft OneDrive__) If you run this l
 
 Therefore: 
 
-> - You must put your files in cabinet. Because rar or zip files could not be using in NTFS Data stream.
-  - NTFS Data stream is trick that you can hide your files.
+> - You must put your files in cabinet. Because rar or zip files could not be using in NTFS Data stream. \
+- NTFS Data stream is trick that you can hide your files.
 {: .prompt-info }
 
 Now, Do you understand why it is embedded with a password, why used cabinet file and NTFS Data stream?  
