@@ -262,7 +262,7 @@ You should see another shortcut file. (__Microsoft OneDrive__) If you run this l
 
 Therefore: 
 
-> - You must put your files in cabinet. Because rar or zip files could not be using in NTFS Data stream.
+> - rar or zip files could not be using in NTFS Data stream. That's why You must put your files in cabinet. 
 - NTFS Data stream is trick that you can hide your files.
 {: .prompt-info }
 
