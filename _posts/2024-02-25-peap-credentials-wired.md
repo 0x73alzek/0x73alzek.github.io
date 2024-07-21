@@ -18,11 +18,10 @@ When you click this Share button, somethings should catches your attention. You 
 
 ![Share Content](/assets/posts/2024-07-14-phishing-is-real/share_content.png)
 
-Let’s assume that we have uploaded a malicious RAR file called `Google Policy Violation Warning.rar` with no password to Google Drive and sent an email [as below](#bölüm-1) to someone (we want to phish him) who had uploaded a file (exe or other etc.) to Google Drive. You might say that Google Drive detects malicious files and wonder how we found the victim’s email. Yeah, we’ll see in the rest of the article.
+Let’s assume that we have uploaded a malicious RAR file called `Google Policy Violation Warning.rar` with no password to Google Drive and sent an email [as below](#Pretext) to someone (we want to phish him) who had uploaded a file (exe or other etc.) to Google Drive. You might say that Google Drive detects malicious files and wonder how we found the victim’s email. Yeah, we’ll see in the rest of the article.
 
 ## Pretext
 
-# bölüm 1
 ```plaintext
 Hello from Google Drive,
 
