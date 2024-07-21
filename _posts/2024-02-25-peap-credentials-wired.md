@@ -46,7 +46,7 @@ Google Drive Team
 
 ## Mail Client Screenshots
 
-The victim will receive an email as shown in the images below to directly inbox.
+The victim will receive an email as shown in the images below to __directly inbox__.
 
 ![Inbox](/assets/posts/2024-07-14-phishing-is-real/inbox.png)
 
