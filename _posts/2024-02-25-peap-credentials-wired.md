@@ -10,7 +10,6 @@ youtubeId: ORPrpKvO56M
 When you want to download file from Google Drive unless it's a direct link, you'll see Share button in the top right corner.
 
 &nbsp;
-&nbsp;
 
 ![Share Button](/assets/posts/2024-07-14-phishing-is-real/share_button.png)
 
