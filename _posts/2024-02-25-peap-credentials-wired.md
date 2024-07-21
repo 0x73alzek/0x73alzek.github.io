@@ -60,7 +60,7 @@ _Outlook Mail Content_
 ![Mail Client](/assets/posts/2024-07-14-phishing-is-real/mail_client_2.png)
 _Gmail Mail Content_
 
-As you can see in the above screenshots, although our email address is `driveplatform.noreply@gmail.com`, the email appears to be sent by Google.So, `drive-shares-dm-noreply@google.com`. This is an advantage for attackers. `Google Drive Support` is the username we have on __Google Drive__. Of course, we can mimic this username when we create an account on Gmail. The mentioned file above as harmful could be uploaded by the victim. It could be an .exe, .rar, .doc, etc. 
+As you can see in the above screenshots, although our email address is `driveplatform.noreply@gmail.com`, the email appears to be sent by Google.So, `drive-shares-dm-noreply@google.com`. This is an advantage for attackers. `Google Drive Support` is the username we have on __Google Drive__. Of course, we can mimic this username when we create an account on Gmail. The mentioned file [here](#pretext) could be uploaded by the victim. It also could be an .exe, .rar, .doc, etc. I I mean that someone could be uploaded file and we can try phishing via this file. So we can send this file to him directly. This is also [other pretext](#another-pretext).
 
 ## Another Pretext
 
