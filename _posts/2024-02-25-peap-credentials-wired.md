@@ -157,14 +157,14 @@ In general, the browser's default download folder is __C:\users\your name\downlo
 
 This file is going to be run on startup.
 
+Target for README.md.lnk:
+
 ```bat
 C:\Windows\System32\expand.exe "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup\Google Policy Violation Warning.pdf.lnk:qwerty" -F:* "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup"
 ```
 
-__After expand, startup folder view:__
-
 ![Startup](/assets/posts/2024-07-14-phishing-is-real/startup.png)
-_README.md.lnk:_
+_After next startup:_
 
 "Send to OneNote" is __not__ default after expand.
 
@@ -239,20 +239,34 @@ C:\> dir /r
 ```
 ![Cabinet](/assets/posts/2024-07-14-phishing-is-real/cab.png)
 
-__Send to OneNote:__
+&nbsp;
+
+Target for Send to OneNote.lnk:
 
 ```bat
 %ProgramW6432%\WinRAR\UnRAR.exe x "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup\a.rar" -pS1B3R@!
 ```
 
+&nbsp;
+
 > We sent a phishing email with an attached rar file that has no password. But, what's that?! It contains another rar file, and this one has a password. Did you like it?
 {: .prompt-tip} 
+
+&nbsp;
 
 __And again another next startup:__
 
 ![Startup](/assets/posts/2024-07-14-phishing-is-real/last_startup.png)
 
-You should see another shortcut file. (Microsoft OneDrive) If you run this lnk file directly, there's no problem. Antivirus software does not catch it. But if you download a rar file with the 'Microsoft OneDrive.lnk' file directly embedded, antivirus software will detect it. Then you must put your files in cabinet. Because rar or zip files could not be using in NTFS Data stream. NTFS Data stream is trick that you can hide your files. Now, Do you understand why it is embedded with a password, why used cabinet file and NTFS Data stream?
+You should see another shortcut file. (__Microsoft OneDrive__) If you run this lnk file directly, there's no problem. Antivirus software does not catch it. But if you download a rar file with the 'Microsoft OneDrive.lnk' file directly embedded, antivirus software will detect it. 
+
+Therefore: 
+
+> - You must put your files in cabinet. Because rar or zip files could not be using in NTFS Data stream.
+  - NTFS Data stream is trick that you can hide your files.
+{: .prompt-info }
+
+Now, Do you understand why it is embedded with a password, why used cabinet file and NTFS Data stream?  
 
 ## Let's analyze what this shortcut file does.
 
@@ -260,7 +274,7 @@ You should see another shortcut file. (Microsoft OneDrive) If you run this lnk f
 
 As you can see, The target can't see it. Because it's overflowed with 512 bytes as space. Or, you can apply other trick. 
 
->Did you also know that you can completely hide the target part on the GUI without using overflow? I highly recommend reviewing the documentation I provided below that shows the structure of lnk files.
+> Did you also know that you can completely hide the target part on the GUI without using overflow? I highly recommend reviewing the documentation I provided below that shows the structure of lnk files.
 {: .prompt-tip}
 
 
