@@ -20,7 +20,7 @@ When you click this Share button, somethings should catches your attention. You 
 
 Let’s assume that we have uploaded a malicious RAR file called `Google Policy Violation Warning.rar` with no password to Google Drive and sent an email [as below](#specification) to someone (we want to phish him) who had uploaded a file (exe or other etc.) to Google Drive. You might say that Google Drive detects malicious files and wonder how we found the victim’s email. Yeah, we’ll see in the rest of the article.
 
-## Specification
+## Pretext
 
 ```plaintext
 Hello from Google Drive,
