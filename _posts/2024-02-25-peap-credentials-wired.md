@@ -7,7 +7,7 @@ image: /assets/og/1733.png
 youtubeId: ORPrpKvO56M
 ---
 
-When you want to download file (unless it's a direct link, of course.) from Google Drive, you'll see Share button in the top right corner.
+When you want to download file from Google Drive unless it's a direct link, you'll see Share button in the top right corner.
 
 &nbsp;
 &nbsp;
